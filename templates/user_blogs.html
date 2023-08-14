@@ -1,0 +1,267 @@
+{% extends 'user_dashboard.html' %}
+
+{% block content %}
+<style>
+    .blogs{
+        background-color: white;
+    }
+    .featuredBlogCard{
+
+margin: 15px;
+overflow: hidden;
+width: 330px;
+border-radius: 7px;
+height: 570px;
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.featuredPictureContainer{
+width: 100%;
+height: 40%;
+overflow: hidden;
+}
+.featuredBlogCard img{
+
+border-top-left-radius: 7px;
+border-top-right-radius: 7px;
+width: 100%;
+height: 100%;
+object-fit: cover;
+transition: transform 0.2s;
+}
+
+.featuredBlogCard img:hover{
+transform: scale(1.05);
+
+}
+.metaData{
+padding: 0 20px;
+display: flex;
+justify-content: space-between;
+}
+
+.data{
+padding: 0 20px;
+}
+.metaData p, .data p{
+font-size: 14px;
+}
+.data h2{
+margin: 10px 0;
+}
+.data p{
+color: rgb(118, 118, 118);
+}
+.parentContainer{
+    width: 100%;
+    height: 100%;
+}
+.blogContainer{
+    width: 100%;
+    height: 87%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.editContainer{
+    display: flex;
+    padding: 0 20px;
+    width: 100%;
+    height: 10%;
+}
+.blogCardContainer{
+    height: 90%;
+}
+.editContainer a{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+.editContainer button{
+    cursor: pointer;;
+    width: 95%;
+    padding: 5px 0;
+    background-color: black;
+    border: none;
+    color: white;
+    border-radius: 4px;
+}
+.deleteBlogPromptContainer{
+    display: none;
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    background-color: rgba(0,0,0, 0.6);
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+}
+.deleteBlogPrompt{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 220px;
+    width: 400px;
+    background-color: aquamarine;
+    flex-direction: column;
+    font-weight: 500;
+    border-radius: 7px;
+}
+.deleteContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.deleteContainer a{
+    width: 50%;
+}
+.deleteContainer button{
+    border: none;
+    padding: 6px 0;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+    width: 95%;
+}
+.create-blog-btn{
+    cursor: pointer;
+    height: 120px;
+    border-radius: 50%;
+    width: 120px;
+    background-color: aquamarine;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.navigationContainer{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.paginator{
+    margin: 30px 0;
+    padding: 0 0 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    list-style-type: none;
+}
+.paginator a{
+    margin: 5px;
+}
+.paginator a li{
+    padding: 10px 15px;
+    font-weight: 600;
+}
+.paginator a li.active{
+    background-color: aquamarine;
+}
+.noBlogContainer{
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin: 100px auto;
+    width: 400px;
+    background-color: aquamarine;
+    color: black;
+    font-weight: 600;
+}
+</style>
+
+<div class="parentContainer">
+    {% if blogs %}
+    <div class="blogContainer">
+        {% for blog in blogs %}
+    
+                <div class="featuredBlogCard">
+                    <div class="blogCardContainer">
+                        <div class="featuredPictureContainer">
+                            <a href="{% url 'blogInside' id=blog.id %}"><img src="{{blog.image.url}}" alt="Not Available"></a>
+                        </div>
+                        <div class="metaData">
+                            <p>{{blog.creator}}</p><p>{{blog.created_at}}</p>
+                        </div>
+                        <div class="data">
+                            <h4>{{blog.title}}</h4>
+                            <p>{{blog.description}}</p>
+                            
+                        </div>
+                    </div>
+                    <div class="editContainer">
+                        <a href="{% url 'updateBlog' id=blog.id %}"><button>Edit</button></a>
+                        <a href="javascript:(void)"> <button class="delete-btn">Delete</button></a>
+                    </div>
+                </div>
+
+                <div id="deleteBlogPromptContainer2" class="deleteBlogPromptContainer">
+                    <div class="deleteBlogPrompt">
+                        <p>Are you sure you want to delete the blog?</p>
+                        <div class="deleteContainer"><a href="{% url 'deleteBlog' id=blog.id%}"><button>Yes</button></a><a href="javascript:(void)"><button id="cancel-delete" >No</button></a></div>
+                    </div>
+                </div>
+                
+    {% endfor %}
+    
+    
+    </div>
+    
+    <div class="navigationContainer">
+        <ol class="paginator">
+            {% if blogs.has_previous %}
+            <a href="?page={{blogs.previous_page_number}}"><li>&laquo;</li></a>
+            {% else %}
+            <li class="disabled">&laquo;</li>
+            {% endif %}
+            {% for i in blogs.paginator.page_range %}
+            {% if blogs.number == i %}
+            <a href="?page={{i}}"><li class="active">{{i}}</li></a>
+            {% else %}
+            <a href="?page={{i}}"><li>{{i}}</li></a>
+            {% endif %}
+            {% endfor %}
+            {% if blogs.has_next %}
+            <a href="?page={{blogs.next_page_number}}"><li>&raquo;</li></a>
+            {% else %}
+            <li class="disabled">&raquo;</li>
+            {% endif %}
+        </ol> 
+    </div>
+    {% else %}
+    <div class="noBlogContainer">
+        <p>No Blog found</p>
+    </div>
+    {% endif %}
+</div>
+
+
+
+
+<a href="{% url 'createBlog' %}"><button class="create-blog-btn">Create a new blog</button></a>
+
+<script type="text/javascript">
+    console.log('JS connected!')
+    document.querySelectorAll('.delete-btn').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+            document.getElementById('deleteBlogPromptContainer2').style.display = 'flex'
+        })
+    })
+    document.getElementById('cancel-delete').addEventListener('click',()=>{
+        document.getElementById('deleteBlogPromptContainer2').style.display = 'none'
+    })
+
+
+</script>
+{% endblock %}

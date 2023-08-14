@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/blog_inside.css' %}">
+    <title>{{blog.title}}</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    <div class="row1">
+        <h1>{{blog.title}}</h1>
+        <p>{{blog.content | safe}}</p>
+
+        <p><b>Author: {{blog.creator}}</b></p>
+        <p><b>Created at: {{blog.created_at}}</b></p>
+    </div>
+
+    <div class="row2">
+        <form method="POST" action="{% url 'addCommentToBlog' %}">
+            {% csrf_token %}
+            <h3>Add a comment</h3>
+            <tr>
+                <td>
+            
+            <select style="display: none;" name="username" required id="id_username">
+              <option value="" selected>{{request.user}}</option>
+            
+            </select>
+            
+            
+                </td>
+              </tr>
+            
+              <tr>
+                <td>
+            
+            <select style="display: none;" name="blog" required id="id_blog">
+              <option value="1" selected>{{blog}}</option>
+            
+            </select>
+            
+            
+                </td>
+              </tr>
+            
+              <tr>
+                <td>
+            
+                  <textarea placeholder="Write your comment" name="comment" cols="40" rows="10" required id="id_comment"></textarea>
+            
+            
+            
+            
+                </td>
+              </tr>
+            <button>Post Comment</button>
+        </form>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

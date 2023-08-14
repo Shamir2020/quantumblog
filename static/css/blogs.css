@@ -1,0 +1,41 @@
+
+.navigationContainer{
+    
+    width: 1200px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.paginator{
+    padding: 10px;
+    
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.paginator a{
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-size: 18px;
+}
+.paginator li{
+    color: black;
+    font-weight: 600;
+    font-size: 18px;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(77, 76, 76);
+}
+.paginator li.disabled{
+    color: grey;
+}
+.paginator li.active{
+    background-color: aquamarine;
+}

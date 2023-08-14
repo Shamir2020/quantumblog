@@ -1,0 +1,28 @@
+{% extends 'user_dashboard.html' %}
+
+
+{% block content %}
+<style>
+    .dashboard{
+        background-color: white;
+    }
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<div class="container">
+    <h1>Welcome {{request.user.first_name}} to your dashboard</h1>
+           <div>
+            <h2>You have total - </h2>
+            <ul>
+                <li><h2>5 blogs</h2></li>
+                <li><h2>10 stories</h2></li>
+                <li><h2>15 Guides</h2></li>
+            </ul>
+           </div>
+</div>
+
+{% endblock %}

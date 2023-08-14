@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/user_dashboard.css' %}">
+    <title>User Dashboard</title>
+</head>
+<body>
+    <div class="dashboardContainer">
+       <div class="sidebarContainer">
+        <a href="{% url 'home' %}"><h2 style="text-align: center;">Quantum Blog</h2></a>
+        <ol>
+            <a class="dashboard" href="{% url 'userDashboard' page='dashboard' %}"><li><img src="{% static 'images/dashboard.png' %}" alt="">&nbsp;&nbsp;&nbsp;&nbsp;Dashboard</li></a>
+            <a class="profile" href="{% url 'userDashboard' page='profile' %}"><li><img src="{% static 'images/profile.png' %}" alt="">&nbsp;&nbsp;&nbsp;&nbsp;Profile</li></a>
+            <a class="blogs" href="{% url 'userDashboard' page='blogs' %}"><li><img src="{% static 'images/blogger.png' %}" alt="">&nbsp;&nbsp;&nbsp;&nbsp;Personal Blogs</li></a>
+            <a class="stories" href="{% url 'userDashboard' page='stories' %}"><li><img src="{% static 'images/bedtime.png' %}" alt="">&nbsp;&nbsp;&nbsp;&nbsp;Personal Stories</li></a>
+            <a class="guides" href="{% url 'userDashboard' page='guides' %}"><li><img src="{% static 'images/tour-guide.png' %}" alt="">&nbsp;&nbsp;&nbsp;&nbsp;Personal Guides</li></a>
+
+
+        </ol>
+        <div class="logoutContainer">
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+       </div>
+       <div class="mainContainer">
+
+        <div class="mainContainerRow2">
+            {% block content %}
+            
+            {% endblock %}
+        </div>
+       </div>
+    </div>
+
+</body>
+</html>

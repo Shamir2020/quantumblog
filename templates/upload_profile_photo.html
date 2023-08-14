@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/upload_profile_photo.css' %}">
+    <title>Upload a profile picture</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <form id="form" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form}}
+        <p id="errorMessage"></p>
+        <button id="submit-btn">Upload</button>
+    </form>
+    {% include 'footer.html' %}
+
+    <script type="text/javascript">
+
+        document.getElementById('form').addEventListener('submit',(e)=>{
+            var imageField = document.getElementById('id_image')
+            if (imageField.files.length == 0){
+                e.preventDefault()
+                document.getElementById('errorMessage').innerHTML = 'Upload a picture first'
+            }
+            else{
+                document.getElementById('form').submit()
+            }
+        })
+        
+        
+    </script>
+</body>
+</html>
