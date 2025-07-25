@@ -6,13 +6,13 @@ body{
     box-sizing: border-box;
 }
 .picContainer{
-
-    height: 700px;
+    height: 100dvh;
+    min-height: 700px;
     
 }
 .picContainer img{
     
-    height: 700px;
+    height: 100%;
     width: 100%;
     background-position: center;
     background-attachment: fixed;
